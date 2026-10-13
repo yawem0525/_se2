@@ -119,6 +119,45 @@
                 <h3>微型企業碳盤查與綠色代幣系統 (EcoTrack)</h3>
                 <p class="tech-stack">使用技術：Python, Solidity, 智能合約</p>
                 <p>結合 IPAS 淨零規劃的知識所設計的系統。透過 Python 引擎自動化計算日常用電與國內航班等碳排放量，並在驗證減碳成果後，透過 Solidity 智能合約發行綠色代幣 (GreenToken) 作為獎勵，提供企業與個人實踐 ESG 的數位化解決方案。</p>
+           <div class="calculator-box" style="background: #f1f8f5; padding: 1.5rem; border-radius: 8px; margin-top: 1rem; border: 1px solid #2ecc71;">
+    <h4 style="margin-top: 0; color: #27ae60;">⚡ 互動體驗：微型碳排放計算機</h4>
+    
+    <label>每月用電量 (度)：</label><br>
+    <input type="number" id="kwh" placeholder="例如：300" style="margin-bottom: 10px; padding: 5px;"><br>
+    
+    <label>國內航班單趟飛行距離 (公里)：</label><br>
+    <input type="number" id="flightKm" placeholder="例如：300 (金門飛高雄)" style="margin-bottom: 10px; padding: 5px;"><br>
+
+    <label>每月搭乘次數：</label><br>
+    <input type="number" id="flightCount" placeholder="例如：2" style="margin-bottom: 10px; padding: 5px;"><br>
+
+    <button onclick="calculateCarbon()" style="background: #2ecc71; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">計算碳排量</button>
+
+    <div id="result" style="margin-top: 15px; font-weight: bold; color: #2c3e50;"></div>
+</div>
+
+<script>
+function calculateCarbon() {
+    // 取得輸入的值
+    const kwh = document.getElementById('kwh').value || 0;
+    const flightKm = document.getElementById('flightKm').value || 0;
+    const flightCount = document.getElementById('flightCount').value || 0;
+
+    // 碳排係數 (與 Python 版本相同)
+    const factorElec = 0.495;
+    const factorFlight = 0.15;
+
+    // 計算
+    const elecCO2 = kwh * factorElec;
+    const flightCO2 = flightKm * flightCount * factorFlight;
+    const totalCO2 = elecCO2 + flightCO2;
+
+    // 顯示結果
+    document.getElementById('result').innerHTML = 
+        `📊 您的月碳排放總量約為：<span style="color: #e74c3c; font-size: 1.2rem;">${totalCO2.toFixed(2)}</span> kg CO2e<br>` +
+        `<span style="font-size: 0.9rem; color: #7f8c8d;">(包含用電 ${elecCO2.toFixed(2)} kg, 飛行 ${flightCO2.toFixed(2)} kg)</span>`;
+}
+</script>
             </div>
         </div>
     </div>
