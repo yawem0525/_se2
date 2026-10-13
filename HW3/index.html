@@ -10,7 +10,40 @@
             --secondary-color: #2ecc71;
             --bg-color: #f8f9fa;
             --text-color: #333;
+            --body.dark-mode:
         }
+        /* 新增深色模式的切換按鈕樣式 */
+    .theme-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 15px;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+               }
+
+/* 定義深色模式啟動時的顏色 */
+body.dark-mode {
+    --primary-color: #1a252f;
+    --secondary-color: #27ae60;
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --section-bg: #1e1e1e;
+}
+
+/* 把 .section 的背景顏色改成讀取變數（如果你原本的 .section 裡面有 background: #fff; 請改成這樣） */
+.section {
+    background: var(--section-bg, #fff);
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -87,7 +120,7 @@
     </style>
 </head>
 <body>
-
+<button id="theme-toggle" class="theme-btn">🌙 切換深色模式</button>
     <header>
         <h1>你好，我是資訊工程系學生</h1>
         <p>專注於軟體開發、數據分析與淨零碳排科技應用</p>
