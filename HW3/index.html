@@ -119,6 +119,31 @@ body.dark-mode {
         }
     </style>
 </head>
+    <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // 檢查瀏覽器是否曾經記住使用者的深色模式選擇
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleBtn.textContent = '☀️ 切換淺色模式';
+    }
+
+    // 當按鈕被點擊時執行的動作
+    toggleBtn.addEventListener('click', () => {
+        // 切換 body 的 dark-mode class
+        body.classList.toggle('dark-mode');
+        
+        // 判斷現在是否為深色模式，並改變按鈕文字與儲存設定
+        if (body.classList.contains('dark-mode')) {
+            toggleBtn.textContent = '☀️ 切換淺色模式';
+            localStorage.setItem('theme', 'dark'); // 記住設定
+        } else {
+            toggleBtn.textContent = '🌙 切換深色模式';
+            localStorage.setItem('theme', 'light'); // 記住設定
+        }
+    });
+</script>
 <body>
 <button id="theme-toggle" class="theme-btn">🌙 切換深色模式</button>
     <header>
