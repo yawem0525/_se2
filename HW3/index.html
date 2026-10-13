@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人作品集 | 開發者</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #2ecc71;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        header {
+            background: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        .section {
+            background: #fff;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .skills span {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .project {
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .project h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #2980b9;
+        }
+        .tech-stack {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>你好，我是資訊工程系學生</h1>
+        <p>專注於軟體開發、數據分析與淨零碳排科技應用</p>
+    </header>
+
+    <div class="container">
+        <!-- 關於我區塊 -->
+        <div class="section">
+            <h2>關於我</h2>
+            <p>目前就讀於國立金門大學。我對程式開發與解決實際問題充滿熱情，平時除了鑽研演算法與數據視覺化，也積極關注區塊鏈技術以及永續發展 (ESG) 的跨領域結合，並致力於將所學轉化為具備商業價值的專案。</p>
+        </div>
+
+        <!-- 技能區塊 -->
+        <div class="section">
+            <h2>專業技能</h2>
+            <div class="skills">
+                <span>Python</span>
+                <span>Solidity (區塊鏈)</span>
+                <span>Tableau (數據視覺化)</span>
+                <span>GitHub / Git</span>
+                <span>HTML / CSS</span>
+            </div>
+        </div>
+
+        <!-- 專案區塊 -->
+        <div class="section">
+            <h2>專案經歷</h2>
+            <div class="project">
+                <h3>微型企業碳盤查與綠色代幣系統 (EcoTrack)</h3>
+                <p class="tech-stack">使用技術：Python, Solidity, 智能合約</p>
+                <p>結合 IPAS 淨零規劃的知識所設計的系統。透過 Python 引擎自動化計算日常用電與國內航班等碳排放量，並在驗證減碳成果後，透過 Solidity 智能合約發行綠色代幣 (GreenToken) 作為獎勵，提供企業與個人實踐 ESG 的數位化解決方案。</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 個人作品集. Hosted on GitHub Pages.</p>
+    </footer>
+
+</body>
+</html>
