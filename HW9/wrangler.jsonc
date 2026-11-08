@@ -2,11 +2,5 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "se2",
   "main": "src/index.ts",
-  "compatibility_date": "2026-01-01",
-  "kv_namespaces": [
-    {
-      "binding": "NOTES_KV",
-      "id": "93e7565e21244dfbb53a0a570a7c8e9b"
-    }
-  ]
+  "compatibility_date": "2026-01-01"
 }
