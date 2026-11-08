@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>待辦清單 - 測試整合系統</title>
+    <style>
+        body { font-family: sans-serif; max-width: 500px; margin: 40px auto; padding: 0 20px; }
+        .input-group { display: flex; gap: 8px; margin-bottom: 20px; }
+        input { flex: 1; padding: 8px; }
+        button { padding: 8px 16px; cursor: pointer; }
+        ul { list-style: none; padding: 0; }
+        li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .error { color: red; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h2>任務管理儀表板</h2>
+    <div class="input-group">
+        <input type="text" id="task-input" data-testid="task-input" placeholder="請輸入任務名稱...">
+        <button id="add-btn" data-testid="add-btn" onclick="addTask()">新增</button>
+    </div>
+    <div id="error-msg" data-testid="error-msg" class="error"></div>
+    <ul id="task-list" data-testid="task-list"></ul>
+
+    <script>
+        async function loadTasks() {
+            const res = await fetch('/api/tasks');
+            const tasks = await res.json();
+            const list = document.getElementById('task-list');
+            list.innerHTML = '';
+            tasks.forEach(t => {
+                const li = document.createElement('li');
+                li.setAttribute('data-testid', 'task-item');
+                li.innerHTML = `<span>${t.title}</span><button data-testid="delete-btn" onclick="deleteTask(${t.id})">刪除</button>`;
+                list.appendChild(li);
+            });
+        }
+
+        async function addTask() {
+            const input = document.getElementById('task-input');
+            const errorDiv = document.getElementById('error-msg');
+            errorDiv.textContent = '';
+            
+            const res = await fetch('/api/tasks', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: input.value })
+            });
+
+            if (res.ok) {
+                input.value = '';
+                loadTasks();
+            } else {
+                const err = await res.text();
+                errorDiv.textContent = err;
+            }
+        }
+
+        async function deleteTask(id) {
+            await fetch(`/api/tasks/${id}`, { method: 'DELETE' });
+            loadTasks();
+        }
+
+        loadTasks();
+    </script>
+</body>
+</html>
