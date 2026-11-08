@@ -1,0 +1,13 @@
+rust-testing-app/
+├── Cargo.toml
+├── src/
+│   ├── lib.rs          # 核心領域模型、業務邏輯、API 路由與單元測試
+│   └── main.rs         # 伺服器啟動進入點
+├── tests/
+│   └── api_test.rs     # 系統測試：Web API 測試
+├── static/
+│   └── index.html      # 簡易展示前端 Web 介面
+├── package.json        # Playwright E2E 測試依賴
+├── playwright.config.js # Playwright 設定檔
+└── e2e/
+    └── app.spec.js     # E2E 測試腳本
