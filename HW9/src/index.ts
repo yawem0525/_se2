@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 
 type Bindings = {
-  NOTES_KV: KVNamespace;
+  NOTES_KV?: KVNamespace;
 };
 
 interface Note {
@@ -10,19 +10,30 @@ interface Note {
   createdAt: string;
 }
 
+// 記憶體備案（若 KV 連線異常時維持網頁正常運作）
+let fallbackNotes: Note[] = [
+  {
+    id: '1',
+    text: '歡迎使用運行在 Cloudflare 邊緣節點的 Web 應用！',
+    createdAt: new Date().toLocaleTimeString('zh-TW', { hour12: false }),
+  },
+];
+
 const app = new Hono<{ Bindings: Bindings }>();
 
 // API: 取得所有便條
 app.get('/api/notes', async (c) => {
-  const data = await c.env.NOTES_KV.get('notes_data');
-  const notes: Note[] = data ? JSON.parse(data) : [
-    {
-      id: '1',
-      text: '歡迎使用運行在 Cloudflare 邊緣節點的 Web 應用！',
-      createdAt: new Date().toLocaleTimeString('zh-TW', { hour12: false }),
-    },
-  ];
-  return c.json(notes);
+  try {
+    if (c.env?.NOTES_KV) {
+      const data = await c.env.NOTES_KV.get('notes_data');
+      if (data) {
+        return c.json(JSON.parse(data));
+      }
+    }
+  } catch (err) {
+    console.error('KV 讀取錯誤：', err);
+  }
+  return c.json(fallbackNotes);
 });
 
 // API: 新增便條
@@ -32,20 +43,26 @@ app.post('/api/notes', async (c) => {
     return c.json({ error: '內容不能為空' }, 400);
   }
 
-  const data = await c.env.NOTES_KV.get('notes_data');
-  const notes: Note[] = data ? JSON.parse(data) : [];
-
   const newNote: Note = {
     id: crypto.randomUUID(),
     text: body.text.trim(),
     createdAt: new Date().toLocaleTimeString('zh-TW', { hour12: false }),
   };
 
-  notes.unshift(newNote);
+  try {
+    if (c.env?.NOTES_KV) {
+      const data = await c.env.NOTES_KV.get('notes_data');
+      const notes: Note[] = data ? JSON.parse(data) : [];
+      notes.unshift(newNote);
+      await c.env.NOTES_KV.put('notes_data', JSON.stringify(notes));
+      return c.json(newNote, 201);
+    }
+  } catch (err) {
+    console.error('KV 寫入錯誤：', err);
+  }
 
-  // 永久寫入 Cloudflare KV
-  await c.env.NOTES_KV.put('notes_data', JSON.stringify(notes));
-
+  // 若無 KV 則寫入記憶體
+  fallbackNotes.unshift(newNote);
   return c.json(newNote, 201);
 });
 
@@ -63,7 +80,7 @@ app.get('/', (c) => {
   <div class="max-w-xl mx-auto space-y-6">
     <header class="border-b border-slate-700 pb-4">
       <h1 class="text-3xl font-bold text-amber-400">⚡ Edge Notes</h1>
-      <p class="text-sm text-slate-400 mt-1">已連接 Cloudflare KV 永久儲存</p>
+      <p class="text-sm text-slate-400 mt-1">已連接 Cloudflare 邊緣應用</p>
     </header>
 
     <div class="flex gap-2">
