@@ -1,0 +1,12 @@
+{
+  "name": "hw9",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "hono": "^4.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250101.0",
+    "wrangler": "^3.0.0"
+  }
+}
