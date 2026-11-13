@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cf-app-client"
+version = "0.1.0"
+description = "Python client for my Cloudflare Workers app"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Your Name", email = "you@example.com" }]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/yourname/cf-app-py"
