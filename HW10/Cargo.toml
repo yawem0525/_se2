@@ -1,0 +1,12 @@
+[package]
+name = "cf_app_client"
+version = "0.1.0"
+edition = "2021"
+description = "Rust client library for my Cloudflare Workers app"
+license = "MIT"
+repository = "https://github.com/yourname/cf-app-rs"
+readme = "README.md"
+keywords = ["cloudflare", "workers", "client"]
+categories = ["api-bindings"]
+
+[dependencies]
